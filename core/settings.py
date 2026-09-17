@@ -1,5 +1,7 @@
 from pathlib import Path
 import environ
+import redis
+
 
 env = environ.Env()
 
@@ -49,7 +51,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [ BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -74,6 +76,15 @@ DATABASES = {
     }
 }
 
+REDIS_CLIENT = redis.Redis(
+    host=env('REDIS_HOST'),
+    port=env('REDIS_PORT'),
+    db=env('REDIS_DB'),
+    decode_responses=True,
+)
+
+
+AUTH_USER_MODEL = 'accounts.User'
 
 AUTHENTICATION_BACKENDS = [
     "accounts.backend.MobileBackend",
@@ -114,7 +125,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    BASE_DIR / "assets",
+]
 
+
+MEDIA_ROOT = BASE_DIR / "uploads"
+MEDIA_URL = "/media/"
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 

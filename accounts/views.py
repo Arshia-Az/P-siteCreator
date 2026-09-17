@@ -16,7 +16,7 @@ class AdminLogin(View):
             if user.is_superuser or user.is_staff:
                 return redirect("panel")
             return redirect('/')
-        return render(request, 'fa/admin/admin-login.html')
+        return render(request, 'fa/admin/auth/admin-login.html')
     
     def post(self, request:HttpRequest):
         

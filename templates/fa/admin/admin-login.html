@@ -1,0 +1,180 @@
+{% load static %}
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ورود مدیر سایت</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'admin/css/auth/login.css' %}">
+  </head>
+  <body>
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="card">
+      <div class="card-head">
+        <div class="shield">🛡️</div>
+        <h1>ورود مدیر سایت</h1>
+        <p>این بخش فقط مخصوص مدیریت اصلی سایت است</p>
+      </div>
+      <form
+        id="adminForm"
+        method="post"
+        action="{% url 'admin_log' %}"
+      >
+      {% csrf_token %}
+        <div class="field" id="a-phone-field">
+          <label>شماره موبایل</label>
+          <div class="input-wrap">
+            <input
+              type="text"
+              id="a-phone"
+              inputmode="numeric"
+              placeholder="09xxxxxxxxx"
+              maxlength="11"
+              autocomplete="username"
+              name="phone_number"
+              required
+            />
+          </div>
+          <div class="field-error">
+            ⚠ شماره موبایل معتبر وارد کن (مثلاً ۰۹xxxxxxxxx)
+          </div>
+        </div>
+        <div class="field" id="a-pass-field">
+          <label>رمز عبور</label>
+          <div class="input-wrap">
+            <input
+              type="password"
+              id="a-pass"
+              placeholder="••••••••"
+              autocomplete="current-password"
+              name="password"
+              required
+            />
+
+            <button
+              class="toggle-eye"
+              id="aEyeBtn"
+              type="button"
+              aria-label="نمایش رمز عبور"
+            >
+              <!-- Eye -->
+              <svg
+                class="eye-icon"
+                viewBox="0 0 24 24"
+                width="20"
+                height="20"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </button>
+          </div>
+          <div class="field-error">⚠ رمز عبور را وارد کن</div>
+        </div>
+        <button type="submit" class="submit-btn" id="adminSubmitBtn">
+          <span class="spinner"></span
+          ><span class="btn-text">ورود به پنل مدیریت</span>
+        </button>
+      </form>
+      <div class="foot-note">
+        دسترسی به این بخش فقط برای مدیران مجاز سایت است<br />و همه‌ی ورودها ثبت
+        می‌شود.
+      </div>
+    </div>
+
+    <div class="toast {% if messages %}show{% endif %}" id="toast">
+
+      
+      {% for message in messages %}
+        {{ message }}
+      {% endfor %}
+        
+
+    </div>
+
+    <script>
+      (function () {
+        "use strict";
+        const form = document.getElementById("adminForm");
+        const phoneEl = document.getElementById("a-phone");
+        const passEl = document.getElementById("a-pass");
+        const PHONE_RE = /^09\d{9}$/;
+        const eyeBtn = document.getElementById("aEyeBtn");
+        const eyeIcon = `
+<svg
+    viewBox="0 0 24 24"
+    width="20"
+    height="20"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+>
+    <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/>
+    <circle cx="12" cy="12" r="3"/>
+</svg>
+`;
+
+        const eyeOffIcon = `
+<svg
+    viewBox="0 0 24 24"
+    width="20"
+    height="20"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+>
+    <path d="M3 3l18 18"/>
+    <path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"/>
+
+    <path d="M9.9 4.2A10.8 10.8 0 0 1 12 4c5 0 9 4 10 8a10.8 10.8 0 0 1-3.1 5"/>
+    <path d="M6.6 6.6C4.8 7.9 3.5 9.8 2 12c1 4 5 8 10 8 1.2 0 2.4-.2 3.4-.6"/>
+</svg>
+`;
+
+        eyeBtn.addEventListener("click", () => {
+          const isPassword = passEl.type === "password";
+
+          passEl.type = isPassword ? "text" : "password";
+
+          eyeBtn.innerHTML = isPassword ? eyeOffIcon : eyeIcon;
+
+          eyeBtn.setAttribute(
+            "aria-label",
+            isPassword ? "مخفی کردن رمز عبور" : "نمایش رمز عبور",
+          );
+        });
+
+        [phoneEl, passEl].forEach((el) =>
+          el.addEventListener("input", () => el.classList.remove("err")),
+        );
+        phoneEl.addEventListener("input", () => {
+          phoneEl.value = phoneEl.value.replace(/[^0-9]/g, "");
+        });
+
+        function toast(msg) {
+          const t = document.getElementById("toast");
+          t.textContent = msg;
+          t.classList.add("show");
+          setTimeout(() => t.classList.remove("show"), 2600);
+        }
+      })();
+    </script>
+  </body>
+</html>

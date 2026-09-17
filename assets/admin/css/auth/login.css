@@ -1,0 +1,234 @@
+:root {
+  --chrome-bg: #12151c;
+  --chrome-bg-alt: #1a1e28;
+  --chrome-border: #262b38;
+  --accent: #f2a63a;
+  --accent-dim: #c98526;
+  --danger: #e2604f;
+}
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+body {
+  font-family: "Vazirmatn", Tahoma, sans-serif;
+  color: #e8eaf0;
+  background: radial-gradient(
+    circle at 25% 20%,
+    #232938 0%,
+    var(--chrome-bg) 55%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    #ffffff12 1px,
+    transparent 0
+  );
+  background-size: 26px 26px;
+  pointer-events: none;
+}
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.28;
+  pointer-events: none;
+}
+.blob1 {
+  width: 320px;
+  height: 320px;
+  background: #f2a63a;
+  top: -90px;
+  right: -80px;
+}
+.blob2 {
+  width: 260px;
+  height: 260px;
+  background: #4f7cff;
+  bottom: -90px;
+  left: -60px;
+}
+
+.card {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 380px;
+  background: var(--chrome-bg-alt);
+  border: 1px solid var(--chrome-border);
+  border-radius: 18px;
+  padding: 38px 34px 32px;
+  box-shadow: 0 30px 70px -30px #000000aa;
+}
+.card-head {
+  text-align: center;
+  margin-bottom: 8px;
+}
+.shield {
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  margin: 0 auto 16px;
+  background: linear-gradient(135deg, #232938, #12151c);
+  border: 1px solid var(--chrome-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+.card-head h1 {
+  font-size: 18px;
+  font-weight: 800;
+  margin: 0 0 6px;
+}
+.card-head p {
+  font-size: 12px;
+  color: #8b93a5;
+  margin: 0 0 26px;
+  line-height: 1.8;
+}
+
+.field {
+  margin-bottom: 16px;
+}
+.field label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #c7cbd6;
+  margin-bottom: 7px;
+}
+.field .input-wrap {
+  position: relative;
+}
+.field input {
+  width: 100%;
+  background: #0f1218;
+  border: 1.5px solid var(--chrome-border);
+  border-radius: 10px;
+  padding: 12px 13px;
+  font-size: 14px;
+  color: #e8eaf0;
+  transition: border-color 0.15s;
+}
+.field input#a-phone {
+  direction: ltr;
+  text-align: right;
+  letter-spacing: 0.5px;
+}
+.field input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.field input.err {
+  border-color: var(--danger);
+}
+.field .toggle-eye {
+  position: absolute;
+  left: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #6d7484;
+  font-size: 14px;
+  padding: 2px;
+}
+.field .toggle-eye:hover {
+  color: #aeb3bf;
+}
+.field-error {
+  font-size: 11px;
+  color: var(--danger);
+  margin-top: 6px;
+  display: none;
+}
+.field.has-error .field-error {
+  display: block;
+}
+
+.submit-btn {
+  width: 100%;
+  background: var(--accent);
+  color: #1b1305;
+  border: none;
+  border-radius: 10px;
+  padding: 13px 0;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: filter 0.15s;
+  margin-top: 6px;
+}
+.submit-btn:hover {
+  filter: brightness(1.08);
+}
+.submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+.spinner {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 2px solid #1b130555;
+  border-top-color: #1b1305;
+  animation: spin 0.7s linear infinite;
+  display: none;
+}
+.submit-btn.loading .spinner {
+  display: inline-block;
+}
+.submit-btn.loading .btn-text {
+  opacity: 0.7;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.foot-note {
+  text-align: center;
+  font-size: 10.5px;
+  color: #5a6070;
+  margin-top: 22px;
+  line-height: 1.8;
+}
+
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  opacity: 0;
+  background: #0d0f14ee;
+  color: var(--accent);
+  padding: 12px 22px;
+  border-radius: 24px;
+  font-size: 13px;
+  box-shadow: 0 14px 34px -12px #000000aa;
+  transition: 0.3s;
+  pointer-events: none;
+  z-index: 50;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}

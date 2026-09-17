@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
 
 class CustumerManger(BaseUserManager):
@@ -80,13 +80,12 @@ class CustumerManger(BaseUserManager):
         return new_superuser
         
 
-class User(AbstractBaseUser):
+class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=40)
     last_name = models.CharField(max_length=40)
     avatar = models.ImageField(upload_to='Client/Avatar', null=True, blank=True)
     
     phone_number = models.CharField(max_length=11, unique=True)
-    password = models.CharField(max_length=75, null=True, blank=True)
     
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
@@ -95,7 +94,7 @@ class User(AbstractBaseUser):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
-    REQUIRED_FIELDS = ['first_name', 'phone_number', 'password', ]
+    REQUIRED_FIELDS = ['first_name']
     USERNAME_FIELD = 'phone_number'
     
     objects = CustumerManger()

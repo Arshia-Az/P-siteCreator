@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     
     #internal app
     'accounts',
+    'panel_admin',
 ]
 
 MIDDLEWARE = [

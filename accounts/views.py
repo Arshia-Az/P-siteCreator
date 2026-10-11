@@ -14,7 +14,7 @@ class AdminLogin(View):
         user = request.user
         if user.is_authenticated:
             if user.is_superuser or user.is_staff:
-                return redirect("panel")
+                return redirect("admin_panel")
             return redirect('/')
         return render(request, 'fa/admin/auth/admin-login.html')
     
@@ -53,9 +53,7 @@ class AdminLogin(View):
             is_superuser=int(user.is_superuser),
         )
         
-        return redirect('panel')
-    
-def admin_panel_test(request):
-    return HttpResponse('HI Welcome To Admin Panel')
+        return redirect('admin_panel')
+
             
         
